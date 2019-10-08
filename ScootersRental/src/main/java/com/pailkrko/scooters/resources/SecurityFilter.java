@@ -59,21 +59,8 @@ public class SecurityFilter implements ContainerRequestFilter{
 				
 				// Käyttäjän antama password
 				String password = tokenizer.nextToken();
-
-				if ("user".equals(username) && "password".equals(password)) {
-
-					return;
-					
-				} else if ("user".equals(username) == false && "password".equals(password)) {
-					
-					errorMessage = "Username doesn't exist!";
-					
-				} else if ("user".equals(username) && "password".equals(password) == false) {
-					
-					errorMessage = "Bad password!";
-				}
 				
-				if (users.size() > 0 && ("user".equals(username) == false)) {
+				if (users.size() > 0 ) {
 					
 					if (userService.getUser(username) != null) {
 						user = userService.getUser(username);

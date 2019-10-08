@@ -49,7 +49,7 @@ public class UserResource {
 	@POST
 	public User addUser(User user) {
 		
-		if (!securityContext.isUserInRole("admin")) {
+		if (securityContext.isUserInRole("guest") || securityContext.isUserInRole("user")) {
 			throw new UnauthorizedException("Not authorized");
 		} 
 		return userService.addUser(user);
@@ -59,7 +59,7 @@ public class UserResource {
 	@Path("/{userName}")
 	public User updateUser(@PathParam("userName") String userName, User user) {
 		
-		if (!securityContext.isUserInRole("admin")) {
+		if (securityContext.isUserInRole("guest") || securityContext.isUserInRole("user")) {
 			throw new UnauthorizedException("Not authorized");
 		} 
 		
@@ -70,7 +70,7 @@ public class UserResource {
 	@DELETE
 	@Path("/{userName}")
 	public void deleteUser(@PathParam("userName") String userName){
-		if (!securityContext.isUserInRole("admin")) {
+		if (securityContext.isUserInRole("guest") || securityContext.isUserInRole("user")) {
 			throw new UnauthorizedException("Not authorized");
 		}
 		
