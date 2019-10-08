@@ -13,7 +13,7 @@ public class GeneralExceptionMapper implements ExceptionMapper<Throwable>{
 	@Override
 	public Response toResponse(Throwable ex) {
 		
-		ErrorMessage errorMessage = new ErrorMessage(ex.getMessage(), 500, "Not implemented");
+		ErrorMessage errorMessage = new ErrorMessage(ex.getMessage(), 500);
 		return Response.status(Status.INTERNAL_SERVER_ERROR)
 				.entity(errorMessage)
 				.build();

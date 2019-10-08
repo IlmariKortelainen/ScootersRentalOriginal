@@ -8,13 +8,13 @@ import javax.ws.rs.ext.Provider;
 import com.pailkrko.scooters.model.ErrorMessage;
 
 @Provider
-public class NotFoundExceptionMapper implements ExceptionMapper<NotFoundException> {
+public class UnauthorizedExceptionMapper implements ExceptionMapper<UnauthorizedException> {
 	
 	@Override
-	public Response toResponse(NotFoundException ex) {
+	public Response toResponse(UnauthorizedException ex) {
 		
-		ErrorMessage errorMessage = new ErrorMessage(ex.getMessage(), 404);
-		return Response.status(Status.NOT_FOUND)
+		ErrorMessage errorMessage = new ErrorMessage(ex.getMessage(), 401);
+		return Response.status(Status.UNAUTHORIZED)
 				.entity(errorMessage)
 				.build();
 	}

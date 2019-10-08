@@ -10,7 +10,7 @@
     <name>messenger</name>
 
     <build>
-        <finalName>messenger</finalName>
+        <finalName>ScootersRental</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

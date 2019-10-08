@@ -11,8 +11,13 @@ public class UserService {
 	
 	private Map<String, User> users = DatabaseClass.getUsers();
 	
+	private ArrayList<String> role = new ArrayList<String>();
+	
 	public UserService() {
-		
+		role.add("admin");
+		users.put("admin", new User(1L, "admin", "root", "root", "admin"));
+		User admin = users.get("admin");
+		admin.setRole(role);
 	}
 	
 	public  List<User> getAllUsers() {

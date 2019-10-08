@@ -1,5 +1,6 @@
 package com.pailkrko.scooters.resources;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -15,9 +16,10 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.SecurityContext;
 
+import com.pailkrko.scooters.exception.NotFoundException;
+import com.pailkrko.scooters.exception.UnauthorizedException;
 import com.pailkrko.scooters.model.User;
 import com.pailkrko.scooters.service.UserService;
-
 
 @Path("/users")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -31,7 +33,9 @@ public class UserResource {
 	
 	@GET
 	public List<User> getUsers() {
-		
+		if (securityContext.isUserInRole("guest")) {
+			throw new UnauthorizedException("Not authorized");
+		} 
 		return userService.getAllUsers();
 	}
 	
@@ -39,23 +43,26 @@ public class UserResource {
 	@Path("/{userName}")
 	public User getUser(@PathParam("userName") String userName) {
 		
-		if (!securityContext.isUserInRole("admin")){
-			System.out.println("Hän ei ole admin");
-			throw new WebApplicationException("Not authorized", 401);
-		}
-		
 		return userService.getUser(userName);
 	}
 	
 	@POST
 	public User addUser(User user) {
 		
+		if (!securityContext.isUserInRole("admin")) {
+			throw new UnauthorizedException("Not authorized");
+		} 
 		return userService.addUser(user);
 	}
 	
 	@PUT
 	@Path("/{userName}")
 	public User updateUser(@PathParam("userName") String userName, User user) {
+		
+		if (!securityContext.isUserInRole("admin")) {
+			throw new UnauthorizedException("Not authorized");
+		} 
+		
 		user.setUserName(userName);
 		return userService.updateUser(user);
 	}
@@ -63,6 +70,10 @@ public class UserResource {
 	@DELETE
 	@Path("/{userName}")
 	public void deleteUser(@PathParam("userName") String userName){
+		if (!securityContext.isUserInRole("admin")) {
+			throw new UnauthorizedException("Not authorized");
+		}
+		
 		userService.removeUser(userName);
 	}
 	

@@ -100,6 +100,7 @@ public class SecurityFilter implements ContainerRequestFilter{
 					.status(Response.Status.UNAUTHORIZED)
 					.entity(errorMessage)
 					.build();
+			errorMessage = "User cannot access the resource.";
 			requestContext.abortWith(unauthorizedStatus);
 			
 		}

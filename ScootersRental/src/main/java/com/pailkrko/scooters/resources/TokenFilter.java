@@ -25,7 +25,7 @@ public class TokenFilter implements ContainerRequestFilter{
 
 	@Override
 	public void filter(ContainerRequestContext requestContext) throws IOException {
-		// jos endpoint on token, niin ei tarvi autentikoida
+
 		if(requestContext.getUriInfo().getPath().contains("token")) {
 			return;
 		}
